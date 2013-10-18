@@ -5,13 +5,15 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>12809998-4D6C-4FFF-A953-EC9B53134C5E</string>
+	<string>096DC842-77C9-4B55-89CF-0ACFFA35706D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>example</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>A82F9E36-692E-48C7-9D36-13275D37863B</key>
 		<string>ssh://github.com/bakercp/openFrameworks.git</string>
+		<key>DFA66B64-4CB9-4F96-A977-15E8BE97C3DC</key>
+		<string>ssh://github.com/bakercp/ofxNetworkUtils.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>addons/ofxNetworkUtils/example/example.xcodeproj/project.xcworkspace</string>
@@ -19,15 +21,25 @@
 	<dict>
 		<key>A82F9E36-692E-48C7-9D36-13275D37863B</key>
 		<string>../../../../..</string>
+		<key>DFA66B64-4CB9-4F96-A977-15E8BE97C3DC</key>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/bakercp/openFrameworks.git</string>
+	<string>ssh://github.com/bakercp/ofxNetworkUtils.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
 	<string>A82F9E36-692E-48C7-9D36-13275D37863B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DFA66B64-4CB9-4F96-A977-15E8BE97C3DC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxNetworkUtils</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
