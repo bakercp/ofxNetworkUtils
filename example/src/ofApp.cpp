@@ -60,7 +60,6 @@ void ofApp::draw()
 
     NetworkInterface::NetworkInterfaceList::iterator iter = siteLocalInterfaces.begin();
 
-
     while(iter != siteLocalInterfaces.end())
     {
         ss.str(""); // clear our stringstream

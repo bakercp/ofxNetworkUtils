@@ -29,7 +29,10 @@
 namespace ofx {
 namespace Utils {
 
-    
+
+const std::string Network::DEFAULT_PUBLIC_IP_QUERY_URL = "http://bot.whatismyipaddress.com";
+
+
 std::string Network::getHostName()
 {
     std::string nodeName = "UNKNOWN";
@@ -40,22 +43,22 @@ std::string Network::getHostName()
     }
     catch(const Poco::Net::HostNotFoundException& exc)
     {
-        ofLogError("Network::getNodeName") << "Host not found: " << nodeName;
+        ofLogError("Network::getNodeName") << "Host not found: " << exc.displayText();
         return nodeName;
     }
     catch(const Poco::Net::NoAddressFoundException& exc)
     {
-        ofLogError("Network::getNodeName") << "No Address found: " << nodeName;
+        ofLogError("Network::getNodeName") << "No Address found: " << exc.displayText();
         return nodeName;
     }
     catch(const Poco::Net::DNSException& exc)
     {
-        ofLogError("Network::getNodeName") << "DNS Exception: " << nodeName;
+        ofLogError("Network::getNodeName") << "DNS Exception: " << exc.displayText();
         return nodeName;
     }
     catch(const Poco::IOException& exc)
     {
-        ofLogError("Network::getNodeName") << "IO Exception: " << nodeName;
+        ofLogError("Network::getNodeName") << "IO Exception: " << exc.displayText();
         return nodeName;
     }
     catch(...)
@@ -228,11 +231,12 @@ Network::HostEntry Network::getThisHost()
     return hostEntry;
 }
 
-NetworkInterface::NetworkInterfaceList Network::listNetworkInterfaces(AddressType addressType, NetworkInterface::IPVersion ipVersion)
+Network::NetworkInterfaceList Network::listNetworkInterfaces(AddressType addressType,
+                                                             NetworkInterface::IPVersion ipVersion)
 {
-    NetworkInterface::NetworkInterfaceList all = Poco::Net::NetworkInterface::list();
-    NetworkInterface::NetworkInterfaceList results;  // empty to start
-    NetworkInterface::NetworkInterfaceList::iterator iter = all.begin();
+    NetworkInterfaceList all = Poco::Net::NetworkInterface::list();
+    NetworkInterfaceList results;  // empty to start
+    NetworkInterfaceList::iterator iter = all.begin();
 
     while(iter != all.end())
     {
@@ -283,28 +287,32 @@ NetworkInterface::NetworkInterfaceList Network::listNetworkInterfaces(AddressTyp
 }
 
 
-Poco::Net::IPAddress Network::getPublicIPAddress()
+Poco::Net::IPAddress Network::getPublicIPAddress(const std::string& url)
 {
     try
     {
-        Poco::Net::HTTPClientSession s("bot.whatismyipaddress.com");
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/");
-        s.sendRequest(request);
-        Poco::Net::HTTPResponse response;
-        std::istream& rs = s.receiveResponse(response);
-        std::stringstream ss;
+        ofHttpResponse response = ofLoadURL(url);
 
-        Poco::StreamCopier::copyStream(rs, ss);
-
-        return Poco::Net::IPAddress(ss.str());
-
+        if (response.status == 200)
+        {
+            return Poco::Net::IPAddress(response.data.getText());
+        }
+        else
+        {
+            ofLogError("Network::getPublicIPAddress") << response.error;
+            return Poco::Net::IPAddress();
+        }
+    }
+    catch (Poco::Net::InvalidAddressException& exc)
+    {
+        ofLogError("Network::getPublicIPAddress") << exc.displayText();
+        return Poco::Net::IPAddress();
     }
     catch (Poco::Exception& exc)
     {
         ofLogError("Network::getPublicIPAddress") << exc.displayText();
         return Poco::Net::IPAddress();
     }
-
 }
 
 
