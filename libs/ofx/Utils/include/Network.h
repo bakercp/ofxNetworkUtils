@@ -51,8 +51,13 @@ class Network
 {
 public:
     typedef Poco::Net::HostEntry HostEntry;
+        ///< \brief A typedef for Poco::Net::HostEntry.
+
     typedef Poco::Net::NetworkInterface NetworkInterface;
+        ///< \brief A typedef for Poco::Net::NetworkInterface.
+
     typedef Poco::Net::NetworkInterface::NetworkInterfaceList NetworkInterfaceList;
+        ///< \brief A typedef for Poco::Net::NetworkInterface::NetworkInterfaceList.
 
     enum AddressType
         /// \brief An enumeration of address types.
