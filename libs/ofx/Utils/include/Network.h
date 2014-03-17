@@ -125,10 +125,10 @@ public:
     static const std::string DEFAULT_PUBLIC_IP_QUERY_URL;
         ///< \brief The default URL to determine the machine's public IP.
 
-    // TODO: NetworkInterfaceList code has been updated in newer versions of
-    // POCO.  For network interface information, call POCO directly.
+        // TODO: NetworkInterfaceList code has been updated in newer versions of
+        // POCO.  For network interface information, call POCO directly.
 
-    //    static bool isInRange(const std::string cidr)
+        // static bool isInRange(const std::string cidr)
 
 };
 
