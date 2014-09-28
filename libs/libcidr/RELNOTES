@@ -1,0 +1,29 @@
+Some quick historical release notes
+
+
+1.2.3   2014-02-01
+  Additional build improvements.  Clean up Makefiles through test and
+  examples.  Make simplified working Makefiles be installed for examples.
+  Some clarification in docs about edge cases.
+
+1.2.2   2014-01-13
+  Some improvements in the build infrastructure to make life easier for
+  packagers.
+
+1.2.1   2012-10-22
+  Various changes to the build infrastructure, mostly at the request of
+  and for the benefit of downstream packagers.
+
+1.2     2012-05-07
+  Fix minor bugs in cidr_addr_host{min,max}() relating to /31 and /32
+  (/127 and /128) netmasks.  Clean up compile warnings.  Tweak docs and
+  build process to make things easier for packagers.
+
+1.1     2006-11
+  Improve address parsing.  Add some automated testing.
+
+1.0     2005-05
+  Initial release
+
+
+# vim:ts=2:expandtab
