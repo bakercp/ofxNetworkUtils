@@ -28,11 +28,26 @@
 
 void ofApp::setup()
 {
-    thisHost = ofx::NetworkUtils::getThisHost();
-    nodeName = ofx::NetworkUtils::getNodeName();
-    publicIp = ofx::NetworkUtils::getPublicIPAddress();
+    thisHost = ofx::Net::NetworkUtils::getThisHost();
+    nodeName = ofx::Net::NetworkUtils::getNodeName();
+    publicIp = ofx::Net::NetworkUtils::getPublicIPAddress();
 
-    siteLocalInterfaces = ofx::NetworkUtils::listNetworkInterfaces(ofx::NetworkUtils::SITE_LOCAL);
+    cidr = ofx::Net::CIDRAddress("127.0.0.1/26");
+
+    ofx::Net::CIDRAddress addr0("127.0.0.23");
+    ofx::Net::CIDRAddress addr1("127.0.0.63");
+
+    std::cout << "Raw:          " << cidr.toString() << std::endl;
+    std::cout << "Broadcast :   " << cidr.getBroadcastAddress().toString() << endl;
+    std::cout << "Host Max :    " << cidr.getHostMax().toString() << endl;
+    std::cout << "Host Min :    " << cidr.getHostMin().toString() << endl;
+    std::cout << "Network Addr: " << cidr.getNetworkAddress().toString() << endl;
+
+    std::cout << "# ADDR: " << cidr.getMaximumAddresses() << endl;
+    std::cout << "# HOST: " << cidr.getMaximumSubnets() << endl;
+
+    std::cout << "# IN RANGE? : " << addr0.toString() << ": " << cidr.contains(addr0) << endl;
+    std::cout << "# IN RANGE? : " << addr1.toString() << ": " << cidr.contains(addr1) << endl;
 }
 
 

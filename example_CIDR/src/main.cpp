@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Copyright (c) 2013 Christopher Baker <http://christopherbaker.net>
+// Copyright (c) 2014 Christopher Baker <http://christopherbaker.net>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,24 +23,11 @@
 // =============================================================================
 
 
-#pragma once
+#include "ofApp.h"
 
 
-#include "ofMain.h"
-#include "ofxNetworkUtils.h"
-
-
-class ofApp: public ofBaseApp
+int main()
 {
-public:
-    void setup();
-    void draw();
-
-    Poco::Net::HostEntry thisHost;
-    std::string nodeName;
-
-    Poco::Net::IPAddress publicIp;
-
-    Poco::Net::NetworkInterface::NetworkInterfaceList siteLocalInterfaces;
-
-};
+    ofSetupOpenGL(400, 400, OF_WINDOW);
+    ofRunApp(new ofApp());
+}

@@ -23,17 +23,17 @@
 // =============================================================================
 
 
-#include "Network.h"
+#include "ofx/Net/NetworkUtils.h"
 
 
 namespace ofx {
-namespace Utils {
+namespace Net {
 
 
-const std::string Network::DEFAULT_PUBLIC_IP_QUERY_URL = "http://bot.whatismyipaddress.com";
+const std::string NetworkUtils::DEFAULT_PUBLIC_IP_QUERY_URL = "http://bot.whatismyipaddress.com";
 
 
-std::string Network::getHostName()
+std::string NetworkUtils::getHostName()
 {
     std::string nodeName = "UNKNOWN";
 
@@ -70,7 +70,7 @@ std::string Network::getHostName()
     return nodeName;
 }
 
-std::string Network::getNodeName()
+std::string NetworkUtils::getNodeName()
 {
     return Poco::Environment::nodeName();
 }
@@ -93,9 +93,9 @@ std::string getMacAddress()
 }
 
 
-Network::HostEntry Network::getHostByName(const std::string& hostname)
+NetworkUtils::HostEntry NetworkUtils::getHostByName(const std::string& hostname)
 {
-    Network::HostEntry hostEntry;
+    NetworkUtils::HostEntry hostEntry;
 
     try
     {
@@ -130,9 +130,9 @@ Network::HostEntry Network::getHostByName(const std::string& hostname)
     return hostEntry;
 }
 
-Network::HostEntry Network::getHostByAddress(const Poco::Net::IPAddress& ipAddress)
+NetworkUtils::HostEntry NetworkUtils::getHostByAddress(const Poco::Net::IPAddress& ipAddress)
 {
-    Network::HostEntry hostEntry;
+    NetworkUtils::HostEntry hostEntry;
 
     try
     {
@@ -162,9 +162,9 @@ Network::HostEntry Network::getHostByAddress(const Poco::Net::IPAddress& ipAddre
     return hostEntry;
 }
 
-Network::HostEntry Network::getHost(const std::string& address)
+NetworkUtils::HostEntry NetworkUtils::getHost(const std::string& address)
 {
-    Network::HostEntry hostEntry;
+    NetworkUtils::HostEntry hostEntry;
 
     try
     {
@@ -194,9 +194,10 @@ Network::HostEntry Network::getHost(const std::string& address)
     return hostEntry;
 }
 
-Network::HostEntry Network::getThisHost()
+
+NetworkUtils::HostEntry NetworkUtils::getThisHost()
 {
-    Network::HostEntry hostEntry;
+    NetworkUtils::HostEntry hostEntry;
 
     try
     {
@@ -231,7 +232,7 @@ Network::HostEntry Network::getThisHost()
     return hostEntry;
 }
 
-Network::NetworkInterfaceList Network::listNetworkInterfaces(AddressType addressType,
+NetworkUtils::NetworkInterfaceList NetworkUtils::listNetworkInterfaces(AddressType addressType,
                                                              NetworkInterface::IPVersion ipVersion)
 {
     NetworkInterfaceList all = Poco::Net::NetworkInterface::list();
@@ -287,7 +288,7 @@ Network::NetworkInterfaceList Network::listNetworkInterfaces(AddressType address
 }
 
 
-Poco::Net::IPAddress Network::getPublicIPAddress(const std::string& url)
+Poco::Net::IPAddress NetworkUtils::getPublicIPAddress(const std::string& url)
 {
     try
     {
@@ -317,4 +318,4 @@ Poco::Net::IPAddress Network::getPublicIPAddress(const std::string& url)
 
 
 
-} } // namespace ofx::Utils
+} } // namespace ofx::Net

@@ -5,21 +5,21 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>096DC842-77C9-4B55-89CF-0ACFFA35706D</string>
+	<string>CDF5D48D-24AE-4D68-ABA6-B00C7EF128D9</string>
 	<key>IDESourceControlProjectName</key>
-	<string>example</string>
+	<string>example_CIDR</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>A82F9E36-692E-48C7-9D36-13275D37863B</key>
+		<key>762BBF9E-8DCC-40A4-8E44-1CBFED9D6BB3</key>
 		<string>ssh://github.com/bakercp/openFrameworks.git</string>
 		<key>DFA66B64-4CB9-4F96-A977-15E8BE97C3DC</key>
 		<string>ssh://github.com/bakercp/ofxNetworkUtils.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>addons/ofxNetworkUtils/example/example.xcodeproj/project.xcworkspace</string>
+	<string>addons/ofxNetworkUtils/example_CIDR/example_CIDR.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>A82F9E36-692E-48C7-9D36-13275D37863B</key>
+		<key>762BBF9E-8DCC-40A4-8E44-1CBFED9D6BB3</key>
 		<string>../../../../..</string>
 		<key>DFA66B64-4CB9-4F96-A977-15E8BE97C3DC</key>
 		<string>../../..</string>
@@ -29,7 +29,7 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>A82F9E36-692E-48C7-9D36-13275D37863B</string>
+	<string>762BBF9E-8DCC-40A4-8E44-1CBFED9D6BB3</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -44,7 +44,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>A82F9E36-692E-48C7-9D36-13275D37863B</string>
+			<string>762BBF9E-8DCC-40A4-8E44-1CBFED9D6BB3</string>
 			<key>IDESourceControlWCCName</key>
 			<string>openFrameworks</string>
 		</dict>

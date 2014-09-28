@@ -43,4 +43,6 @@ public:
 
     Poco::Net::NetworkInterface::NetworkInterfaceList siteLocalInterfaces;
 
+    ofx::Net::CIDRAddress cidr;
+
 };
