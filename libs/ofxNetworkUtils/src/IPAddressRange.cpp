@@ -130,27 +130,13 @@ Poco::Net::IPAddress IPAddressRange::getWildcardMask() const
 
 
 
-//bool IPAddressRange::contains(const IPAddressRange& range) const
-//{
-//    if (range.family() != _address.family())
-//    {
-//        return false;
-//    }
-//    else if (_mask.prefixLength() > range.getMaskPrefixLength())
-//    {
-//        return false;
-//    }
-//    else if (_subnet == (range.getAddress() & _mask))
-//    {
-//        // We know the mask is smaller or equal,
-//        // so check the subnet for a match.
-//        return true;
-//    }
-//    else
-//    {
-//        return false;
-//    }
-//}
+bool IPAddressRange::contains(const IPAddressRange& range) const
+{
+    // TODO: this could be more efficient.
+    return getMaskPrefixLength() <= range.getMaskPrefixLength()
+        && contains(range.getHostMin())
+        && contains(range.getHostMax());
+}
 
 
 bool IPAddressRange::contains(const Poco::Net::IPAddress& address) const

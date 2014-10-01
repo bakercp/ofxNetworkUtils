@@ -51,7 +51,7 @@ public:
     Poco::Net::IPAddress getSubnet() const;
     Poco::Net::IPAddress getMask() const;
 
-//  bool contains(const IPAddressRange& range) const;
+    bool contains(const IPAddressRange& range) const;
     bool contains(const Poco::Net::IPAddress& address) const;
 
     unsigned getMaskPrefixLength() const;
