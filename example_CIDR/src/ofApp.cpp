@@ -28,58 +28,106 @@
 
 void ofApp::setup()
 {
-    thisHost = ofx::Net::NetworkUtils::getThisHost();
-    nodeName = ofx::Net::NetworkUtils::getNodeName();
-    publicIp = ofx::Net::NetworkUtils::getPublicIPAddress();
+    ofx::Net::IPAddressRange range0 = ofx::Net::IPAddressRange();
+    ofx::Net::IPAddressRange range1 = ofx::Net::IPAddressRange(Poco::Net::IPAddress("192.168.0.1"));
+    ofx::Net::IPAddressRange range2 = ofx::Net::IPAddressRange(Poco::Net::IPAddress("192.168.0.33"), 23);
+    ofx::Net::IPAddressRange range3 = ofx::Net::IPAddressRange("2001:0db8:85a3::8a2e:0370:7334/64");
+    ofx::Net::IPAddressRange range4 = ofx::Net::IPAddressRange("192.168.5.219/28");
+    ofx::Net::IPAddressRange range5 = ofx::Net::IPAddressRange("2001:0db8:85a3::8a2e:0370:7334");
 
-    cidr = ofx::Net::CIDRAddress("127.0.0.1/26");
+    std::cout << toString(range0);
+    std::cout << "-----" << std::endl;
+    std::cout << toString(range1);
+    std::cout << "-----" << std::endl;
+    std::cout << toString(range2);
+    std::cout << "-----" << std::endl;
+    std::cout << toString(range3);
+    std::cout << "-----" << std::endl;
+    std::cout << toString(range4);
+    std::cout << "-----" << std::endl;
+    std::cout << toString(range5);
+    std::cout << "-----" << std::endl;
 
-    ofx::Net::CIDRAddress addr0("127.0.0.23");
-    ofx::Net::CIDRAddress addr1("127.0.0.63");
+    Poco::Net::IPAddress test0("192.168.0.1");
+    Poco::Net::IPAddress test1("2001:0db8:85a3::8a2e:0370:7334");
+    Poco::Net::IPAddress test2("127.0.0.2");
+    Poco::Net::IPAddress test3("10.10.10.2");
+    Poco::Net::IPAddress test4("::FFFF");
 
-    std::cout << "Raw:          " << cidr.toString() << std::endl;
-    std::cout << "Broadcast :   " << cidr.getBroadcastAddress().toString() << endl;
-    std::cout << "Host Max :    " << cidr.getHostMax().toString() << endl;
-    std::cout << "Host Min :    " << cidr.getHostMin().toString() << endl;
-    std::cout << "Network Addr: " << cidr.getNetworkAddress().toString() << endl;
+    std::cout << toString(range0, test0) << std::endl;
+    std::cout << toString(range0, test1) << std::endl;
+    std::cout << toString(range0, test2) << std::endl;
+    std::cout << toString(range0, test3) << std::endl;
+    std::cout << toString(range0, test4) << std::endl;
 
-    std::cout << "# ADDR: " << cidr.getMaximumAddresses() << endl;
-    std::cout << "# HOST: " << cidr.getMaximumSubnets() << endl;
+//    std::cout << toString(range0, range0) << std::endl;
+//
+//    ofx::Net::IPAddressRange a("192.168.5.219/28");
+//    ofx::Net::IPAddressRange b("192.168.5.219/27");
+//
+//    std::cout << toString(a, b) << std::endl;
+//    std::cout << toString(b, a) << std::endl;
 
-    std::cout << "# IN RANGE? : " << addr0.toString() << ": " << cidr.contains(addr0) << endl;
-    std::cout << "# IN RANGE? : " << addr1.toString() << ": " << cidr.contains(addr1) << endl;
 }
 
 
 void ofApp::draw()
 {
     ofBackground(0);
+}
 
-    int x = 12;
-    int y = 12;
+std::string ofApp::toString(const ofx::Net::IPAddressRange& range)
+{
+    int tab = 20;
+    std::stringstream ss;
+    ss << std::setw(tab) << "Range: " << range.toString() << std::endl;
+    ss << std::setw(tab) << "Subnet: " << range.getSubnet().toString() << std::endl;
+    ss << std::setw(tab) << "Mask: " << range.getMask().toString() << std::endl;
 
+    ss << std::setw(tab) << "Prefix Mask: " << range.getMaskPrefixLength() << std::endl;
+    ss << std::setw(tab) << "Wildcard Mask: " << range.getWildcardMask().toString() << std::endl;
+
+    ss << std::setw(tab) << "Host Min: " << range.getHostMin().toString() << std::endl;
+    ss << std::setw(tab) << "Host Max: " << range.getHostMax().toString() << std::endl;
+
+    return ss.str();
+}
+
+
+std::string ofApp::toString(const ofx::Net::IPAddressRange& range,
+                            const Poco::Net::IPAddress& address)
+{
     std::stringstream ss;
 
-    ss << std::setw(10) << "Hostname: " << nodeName << std::endl;
-    ss << std::setw(10) << "Public IP: " << publicIp.toString() << std::endl;
-    ss << "------------------------------" << endl;
+    ss << address.toString();
+    ss << (range.contains(address) ? " is in " : " is NOT in ");
+    ss << range.toString();
+    ss << " (" << range.getHostMin().toString();
+    ss << " - " << range.getHostMax().toString();
+    ss << ")" << std::endl;
 
-    ofDrawBitmapString(ss.str(), x, y += 36);
-
-    Poco::Net::NetworkInterface::NetworkInterfaceList::iterator iter = siteLocalInterfaces.begin();
-
-    while(iter != siteLocalInterfaces.end())
-    {
-        ss.str(""); // clear our stringstream
-
-        Poco::Net::NetworkInterface iface = (*iter);
-
-        ss << std::endl << std::setw(18) << "IFace Name: " << iface.name();
-        ss << std::endl << std::setw(18) << "Local IP: " << iface.address().toString();
-
-        ofDrawBitmapString(ss.str(), x + 5, y += 24);
-
-        ++iter;
-    }
+    return ss.str();
 }
+
+
+//std::string ofApp::toString(const ofx::Net::IPAddressRange& range0,
+//                            const ofx::Net::IPAddressRange& range1)
+//{
+//    std::stringstream ss;
+//
+//    ss << range0.toString();
+//    ss << " (" << range0.getHostMin().toString();
+//    ss << " - " << range0.getHostMax().toString();
+//    ss << ") ";
+//
+//    ss << (range0.contains(range1) ? " is in " : " is NOT in ");
+//
+//
+//    ss << range1.toString();
+//    ss << " (" << range1.getHostMin().toString();
+//    ss << " - " << range1.getHostMax().toString();
+//    ss << ")" << std::endl;
+//
+//    return ss.str();
+//}
 

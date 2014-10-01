@@ -1,11 +1,5 @@
 #pragma once
 
-
-extern "C" {
-    #include <libcidr.h>
-}
-
-
 #include "Poco/Net/HostEntry.h"
 #include "Poco/Net/IPAddress.h"
 #include "Poco/Net/NetworkInterface.h"
@@ -22,6 +16,6 @@ extern "C" {
 #include "Poco/Net/HTTPRequest.h"
 #include "Poco/Net/HTTPResponse.h"
 
-#include "ofx/Net/CIDRAddress.h"
+#include "ofx/Net/IPAddressRange.h"
 #include "ofx/Net/NetworkUtils.h"
 #include "ofx/Net/NetworkInterfaceListener.h"

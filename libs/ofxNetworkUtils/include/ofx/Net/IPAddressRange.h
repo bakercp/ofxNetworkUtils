@@ -26,11 +26,7 @@
 #pragma once
 
 
-extern "C" {
-    #include <libcidr.h>
-}
-
-
+#include <vector>
 #include "Poco/Net/IPAddress.h"
 
 
@@ -38,54 +34,51 @@ namespace ofx {
 namespace Net {
 
 
-class CIDRAddress
+class IPAddressRange
 {
 public:
-    typedef std::vector<CIDRAddress> List;
+    typedef std::vector<IPAddressRange> List;
 
     /// \brief Creates a wildcard (zero) IPv4 IPAddress with /32.
-    CIDRAddress();
-    CIDRAddress(const CIDRAddress& addr);
-    CIDRAddress(const std::string& addr);
-    CIDRAddress(const Poco::Net::IPAddress& addr);
+    IPAddressRange();
+    IPAddressRange(const std::string& range);
+    IPAddressRange(const Poco::Net::IPAddress& ip);
+    IPAddressRange(const Poco::Net::IPAddress& ip, unsigned prefix);
 
-	CIDRAddress& operator = (const CIDRAddress& addr);
+    virtual ~IPAddressRange();
 
-    virtual ~CIDRAddress();
+    Poco::Net::IPAddress getAddress() const;
+    Poco::Net::IPAddress getSubnet() const;
+    Poco::Net::IPAddress getMask() const;
 
+//  bool contains(const IPAddressRange& range) const;
+    bool contains(const Poco::Net::IPAddress& address) const;
 
-    bool contains(const CIDRAddress& address) const;
+    unsigned getMaskPrefixLength() const;
+    Poco::Net::IPAddress getWildcardMask() const;
 
-    CIDRAddress getBroadcastAddress() const;
-    CIDRAddress getHostMax() const;
-    CIDRAddress getHostMin() const;
-    CIDRAddress getNetworkAddress() const;
+    Poco::Net::IPAddress getHostMax() const;
+    Poco::Net::IPAddress getHostMin() const;
 
     Poco::Net::IPAddress::Family family() const;
 
-    List getSubnets() const;
-
-    CIDRAddress getSupernet() const;
-
-    /// \brief Determine the total number of addresses in a netblock
-    /// (including the network and broadcast addresses).
-    std::size_t getMaximumAddresses() const;
-
-    /// \brief Determine the total number of host addresses in a netblock
-    /// (excluding the network and broadcast addresses).
-    std::size_t getMaximumSubnets() const;
-
     std::string toString() const;
 
-    bool operator == (const CIDRAddress& addr) const;
+    bool operator == (const IPAddressRange& range) const;
+
+    static const Poco::Net::IPAddress MAXIMUM_PREFIX_IPV4;
+#ifdef POCO_HAVE_IPv6
+    static const Poco::Net::IPAddress MAXIMUM_PREFIX_IPV6;
+#endif
 
 private:
-    /// \brief Create a CIDRAddress.
-    ///
-    /// The CIDRAddress takes ownership of the pointer.
-    CIDRAddress(CIDR* addr);
+    static unsigned maximumPrefix(Poco::Net::IPAddress::Family family);
+    
+    static const Poco::Net::IPAddress& maximumPrefixIPAddress(Poco::Net::IPAddress::Family family);
 
-    CIDR* _cidr;
+    Poco::Net::IPAddress _address;
+    Poco::Net::IPAddress _mask;
+    Poco::Net::IPAddress _subnet;
 
 };
 
