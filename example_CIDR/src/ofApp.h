@@ -41,6 +41,6 @@ public:
     static std::string toString(const ofx::Net::IPAddressRange& range,
                                 const Poco::Net::IPAddress& address);
 
-//    static std::string toString(const ofx::Net::IPAddressRange& range0,
-//                                const ofx::Net::IPAddressRange& range1);
+    static std::string toString(const ofx::Net::IPAddressRange& range0,
+                                const ofx::Net::IPAddressRange& range1);
 };

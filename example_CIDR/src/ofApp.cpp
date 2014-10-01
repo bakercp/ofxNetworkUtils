@@ -28,12 +28,13 @@
 
 void ofApp::setup()
 {
-    ofx::Net::IPAddressRange range0 = ofx::Net::IPAddressRange();
-    ofx::Net::IPAddressRange range1 = ofx::Net::IPAddressRange(Poco::Net::IPAddress("192.168.0.1"));
-    ofx::Net::IPAddressRange range2 = ofx::Net::IPAddressRange(Poco::Net::IPAddress("192.168.0.33"), 23);
-    ofx::Net::IPAddressRange range3 = ofx::Net::IPAddressRange("2001:0db8:85a3::8a2e:0370:7334/64");
-    ofx::Net::IPAddressRange range4 = ofx::Net::IPAddressRange("192.168.5.219/28");
-    ofx::Net::IPAddressRange range5 = ofx::Net::IPAddressRange("2001:0db8:85a3::8a2e:0370:7334");
+    ofx::Net::IPAddressRange range0;
+    ofx::Net::IPAddressRange range1(Poco::Net::IPAddress("192.168.0.1"));
+    ofx::Net::IPAddressRange range2(Poco::Net::IPAddress("192.168.0.33"), 23);
+    ofx::Net::IPAddressRange range3("2001:0db8:85a3::8a2e:0370:7334/64");
+    ofx::Net::IPAddressRange range4("192.168.5.219/28");
+    ofx::Net::IPAddressRange range5("2001:0db8:85a3::8a2e:0370:7334");
+    ofx::Net::IPAddressRange range6("0.0.0.0/31");
 
     std::cout << toString(range0);
     std::cout << "-----" << std::endl;
@@ -53,20 +54,23 @@ void ofApp::setup()
     Poco::Net::IPAddress test2("127.0.0.2");
     Poco::Net::IPAddress test3("10.10.10.2");
     Poco::Net::IPAddress test4("::FFFF");
+    Poco::Net::IPAddress test5("0.0.0.1");
 
     std::cout << toString(range0, test0) << std::endl;
     std::cout << toString(range0, test1) << std::endl;
     std::cout << toString(range0, test2) << std::endl;
     std::cout << toString(range0, test3) << std::endl;
     std::cout << toString(range0, test4) << std::endl;
+    std::cout << toString(range0, test4) << std::endl;
 
-//    std::cout << toString(range0, range0) << std::endl;
-//
-//    ofx::Net::IPAddressRange a("192.168.5.219/28");
-//    ofx::Net::IPAddressRange b("192.168.5.219/27");
-//
-//    std::cout << toString(a, b) << std::endl;
-//    std::cout << toString(b, a) << std::endl;
+    std::cout << toString(range0, test5) << std::endl;
+    std::cout << toString(range6, test5) << std::endl;
+
+    ofx::Net::IPAddressRange a("192.168.5.219/28");
+    ofx::Net::IPAddressRange b("192.168.5.219/27");
+
+    std::cout << toString(a, b) << std::endl;
+    std::cout << toString(b, a) << std::endl;
 
 }
 
@@ -110,24 +114,25 @@ std::string ofApp::toString(const ofx::Net::IPAddressRange& range,
 }
 
 
-//std::string ofApp::toString(const ofx::Net::IPAddressRange& range0,
-//                            const ofx::Net::IPAddressRange& range1)
-//{
-//    std::stringstream ss;
-//
-//    ss << range0.toString();
-//    ss << " (" << range0.getHostMin().toString();
-//    ss << " - " << range0.getHostMax().toString();
-//    ss << ") ";
-//
-//    ss << (range0.contains(range1) ? " is in " : " is NOT in ");
-//
-//
-//    ss << range1.toString();
-//    ss << " (" << range1.getHostMin().toString();
-//    ss << " - " << range1.getHostMax().toString();
-//    ss << ")" << std::endl;
-//
-//    return ss.str();
-//}
+std::string ofApp::toString(const ofx::Net::IPAddressRange& range0,
+                            const ofx::Net::IPAddressRange& range1)
+{
+    std::stringstream ss;
+
+    ss << "The range: ";
+    ss << range0.toString();
+    ss << " (" << range0.getHostMin().toString();
+    ss << " - " << range0.getHostMax().toString();
+    ss << ") ";
+
+    ss << (range1.contains(range0) ? " is contained in " : " is NOT contained in ");
+
+    ss << "The range: ";
+    ss << range1.toString();
+    ss << " (" << range1.getHostMin().toString();
+    ss << " - " << range1.getHostMax().toString();
+    ss << ")" << std::endl;
+
+    return ss.str();
+}
 
