@@ -214,6 +214,8 @@ const Poco::Net::IPAddress& IPAddressRange::maximumPrefixIPAddress(Poco::Net::IP
         case Poco::Net::IPAddress::IPv6:
             return MAXIMUM_PREFIX_IPV6;
 #endif
+        default:
+            return MAXIMUM_PREFIX_IPV4;
     }
 }
 
