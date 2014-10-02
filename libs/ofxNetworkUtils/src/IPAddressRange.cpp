@@ -200,6 +200,8 @@ unsigned IPAddressRange::maximumPrefix(Poco::Net::IPAddress::Family family)
         case Poco::Net::IPAddress::IPv6:
             return 128;
 #endif
+        default:
+            return 32;
     }
 }
 
