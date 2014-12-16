@@ -34,9 +34,15 @@ namespace ofx {
 namespace Net {
 
 
+/// \brief Represents a range of IP addresses.
+///
+/// Address ranges can be defined using CIDR notation and subnets.
+///
+/// \sa https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
 class IPAddressRange
 {
 public:
+    /// \brief Typedef for a collection of IPAddressRanges.
     typedef std::vector<IPAddressRange> List;
 
     /// \brief Creates a wildcard (zero) IPv4 IPAddress with /32.
@@ -73,14 +79,25 @@ public:
 
 private:
     static unsigned maximumPrefix(Poco::Net::IPAddress::Family family);
-    
+
     static const Poco::Net::IPAddress& maximumPrefixIPAddress(Poco::Net::IPAddress::Family family);
 
-    Poco::Net::IPAddress _address;
-    Poco::Net::IPAddress _mask;
-    Poco::Net::IPAddress _subnet;
+    Poco::Net::IPAddress _address; ///< The IP address.
+    Poco::Net::IPAddress _mask;    ///< The IP address mask.
+    Poco::Net::IPAddress _subnet;  ///< The IP address subnet.
+
+    friend std::ostream& operator << (std::ostream& os,
+                                      const IPAddressRange& address);
 
 };
+
+
+inline std::ostream& operator << (std::ostream& os,
+                                  const IPAddressRange& address)
+{
+    os << address.toString();
+    return os;
+}
 
 
 } } // namespace ofx::Net
