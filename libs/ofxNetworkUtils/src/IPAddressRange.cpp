@@ -48,13 +48,13 @@ IPAddressRange::IPAddressRange():
 }
 
 
-IPAddressRange::IPAddressRange(const std::string& addr)
+IPAddressRange::IPAddressRange(const std::string& CIDR)
 {
-    std::size_t position = addr.find("/");
+    std::size_t position = CIDR.find("/");
 
-    if (!Poco::Net::IPAddress::tryParse(addr.substr(0, position), _address))
+    if (!Poco::Net::IPAddress::tryParse(CIDR.substr(0, position), _address))
     {
-        ofLogWarning("CIDRAddress::CIDRAddress") << "Unable to parse address: " << addr;
+        ofLogError("CIDRAddress::CIDRAddress") << "Unable to parse address: " << CIDR;
         _address = Poco::Net::IPAddress();
     }
 
@@ -62,11 +62,11 @@ IPAddressRange::IPAddressRange(const std::string& addr)
 
     if (position != std::string::npos)
     {
-        std::string prefixString = addr.substr(position + 1);
+        std::string prefixString = CIDR.substr(position + 1);
 
         if (!Poco::NumberParser::tryParseUnsigned(prefixString, prefix) || prefix > maximumPrefix(_address.family()))
         {
-            ofLogWarning("CIDRAddress::CIDRAddress") << "Invalid prefix CIDR prefix: " << prefixString;
+            ofLogError("CIDRAddress::CIDRAddress") << "Invalid prefix CIDR prefix: " << prefixString;
             prefix = maximumPrefix(_address.family());
         }
     }
