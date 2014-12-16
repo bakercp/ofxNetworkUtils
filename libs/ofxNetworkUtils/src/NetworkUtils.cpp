@@ -24,6 +24,13 @@
 
 
 #include "ofx/Net/NetworkUtils.h"
+#include "Poco/Environment.h"
+#include "Poco/Exception.h"
+#include "Poco/StreamCopier.h"
+#include "Poco/Net/DNS.h"
+#include "Poco/Net/NetException.h"
+#include "ofLog.h"
+#include "ofURLFileLoader.h"
 
 
 namespace ofx {
