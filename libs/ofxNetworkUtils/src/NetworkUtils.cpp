@@ -48,27 +48,27 @@ std::string NetworkUtils::getHostName()
     {
         nodeName = Poco::Net::DNS::hostName();
     }
-    catch(const Poco::Net::HostNotFoundException& exc)
+    catch (const Poco::Net::HostNotFoundException& exc)
     {
         ofLogError("Network::getNodeName") << "Host not found: " << exc.displayText();
         return nodeName;
     }
-    catch(const Poco::Net::NoAddressFoundException& exc)
+    catch (const Poco::Net::NoAddressFoundException& exc)
     {
         ofLogError("Network::getNodeName") << "No Address found: " << exc.displayText();
         return nodeName;
     }
-    catch(const Poco::Net::DNSException& exc)
+    catch (const Poco::Net::DNSException& exc)
     {
         ofLogError("Network::getNodeName") << "DNS Exception: " << exc.displayText();
         return nodeName;
     }
-    catch(const Poco::IOException& exc)
+    catch (const Poco::IOException& exc)
     {
         ofLogError("Network::getNodeName") << "IO Exception: " << exc.displayText();
         return nodeName;
     }
-    catch(...)
+    catch (...)
     {
         ofLogError("Network::getNodeName") << "Unknown Exception: " << nodeName;
         return nodeName;
@@ -77,10 +77,12 @@ std::string NetworkUtils::getHostName()
     return nodeName;
 }
 
+
 std::string NetworkUtils::getNodeName()
 {
     return Poco::Environment::nodeName();
 }
+
 
 std::string getMacAddress()
 {
@@ -108,27 +110,27 @@ NetworkUtils::HostEntry NetworkUtils::getHostByName(const std::string& hostname)
     {
         hostEntry = Poco::Net::DNS::hostByName(hostname);
     }
-    catch(const Poco::Net::HostNotFoundException& exc)
+    catch (const Poco::Net::HostNotFoundException& exc)
     {
         ofLogError("Network::getHostByName") << "Host not found: " << hostname;
         return hostEntry;
     }
-    catch(const Poco::Net::NoAddressFoundException& exc)
+    catch (const Poco::Net::NoAddressFoundException& exc)
     {
         ofLogError("Network::getHostByName") << "No Address found: " << hostname;
         return hostEntry;
     }
-    catch(const Poco::Net::DNSException& exc)
+    catch (const Poco::Net::DNSException& exc)
     {
         ofLogError("Network::getHostByName") << "DNS Exception: " << hostname;
         return hostEntry;
     }
-    catch(const Poco::IOException& exc)
+    catch (const Poco::IOException& exc)
     {
         ofLogError("Network::getHostByName") << "IO Exception: " << hostname;
         return hostEntry;
     }
-    catch(...)
+    catch (...)
     {
         ofLogError("Network::getHostByName") << "Unknown Exception: " << hostname;
         return hostEntry;
@@ -145,22 +147,22 @@ NetworkUtils::HostEntry NetworkUtils::getHostByAddress(const Poco::Net::IPAddres
     {
         hostEntry = Poco::Net::DNS::hostByAddress(ipAddress);
     }
-    catch(const Poco::Net::HostNotFoundException& exc)
+    catch (const Poco::Net::HostNotFoundException& exc)
     {
         ofLogError("Network::getHostByAddress") << "Host not found: " << ipAddress.toString();
         return hostEntry;
     }
-    catch(const Poco::Net::DNSException& exc)
+    catch (const Poco::Net::DNSException& exc)
     {
         ofLogError("Network::getHostByAddress") << "DNS Exception: " << ipAddress.toString();
         return hostEntry;
     }
-    catch(const Poco::IOException& exc)
+    catch (const Poco::IOException& exc)
     {
         ofLogError("Network::getHostByAddress") << "IO Exception: " << ipAddress.toString();
         return hostEntry;
     }
-    catch(...)
+    catch (...)
     {
         ofLogError("Network::getHostByAddress") << "Unknown Exception: " << ipAddress.toString();
         return hostEntry;
@@ -168,6 +170,7 @@ NetworkUtils::HostEntry NetworkUtils::getHostByAddress(const Poco::Net::IPAddres
     
     return hostEntry;
 }
+
 
 NetworkUtils::HostEntry NetworkUtils::getHost(const std::string& address)
 {
@@ -177,22 +180,22 @@ NetworkUtils::HostEntry NetworkUtils::getHost(const std::string& address)
     {
         hostEntry = Poco::Net::DNS::resolve(address);
     }
-    catch(const Poco::Net::HostNotFoundException& exc)
+    catch (const Poco::Net::HostNotFoundException& exc)
     {
         ofLogError("Network::getHost") << "Host not found: " << address;
         return hostEntry;
     }
-    catch(const Poco::Net::DNSException& exc)
+    catch (const Poco::Net::DNSException& exc)
     {
         ofLogError("Network::getHost") << "DNS Exception: " << address;
         return hostEntry;
     }
-    catch(const Poco::IOException& exc)
+    catch (const Poco::IOException& exc)
     {
         ofLogError("Network::getHost") << "IO Exception: " << address;
         return hostEntry;
     }
-    catch(...)
+    catch (...)
     {
         ofLogError("Network::getHost") << "Unknown Exception: " << address;
         return hostEntry;
@@ -210,27 +213,27 @@ NetworkUtils::HostEntry NetworkUtils::getThisHost()
     {
         hostEntry = Poco::Net::DNS::thisHost();
     }
-    catch(const Poco::Net::HostNotFoundException& exc)
+    catch (const Poco::Net::HostNotFoundException& exc)
     {
         ofLogError("Network::getThisHost") << "Host not found.";
         return hostEntry;
     }
-    catch(const Poco::Net::NoAddressFoundException& exc)
+    catch (const Poco::Net::NoAddressFoundException& exc)
     {
         ofLogError("Network::getThisHost") << "No Address found.";
         return hostEntry;
     }
-    catch(const Poco::Net::DNSException& exc)
+    catch (const Poco::Net::DNSException& exc)
     {
         ofLogError("Network::getThisHost") << "DNS Exception.";
         return hostEntry;
     }
-    catch(const Poco::IOException& exc)
+    catch (const Poco::IOException& exc)
     {
         ofLogError("Network::getThisHost") << "IO Exception.";
         return hostEntry;
     }
-    catch(...)
+    catch (...)
     {
         ofLogError("Network::getThisHost") << "Unknown Exception.";
         return hostEntry;
@@ -246,14 +249,14 @@ NetworkUtils::NetworkInterfaceList NetworkUtils::listNetworkInterfaces(AddressTy
     NetworkInterfaceList results;  // empty to start
     NetworkInterfaceList::iterator iter = all.begin();
 
-    while(iter != all.end())
+    while (iter != all.end())
     {
         bool match = false;
 
         Poco::Net::NetworkInterface iface = (*iter);
         Poco::Net::IPAddress address = iface.address();
 
-        switch(addressType)
+        switch (addressType)
         {
             case WILDCARD:
                 match = address.isWildcard();
@@ -278,11 +281,11 @@ NetworkUtils::NetworkInterfaceList NetworkUtils::listNetworkInterfaces(AddressTy
                 break;
         }
 
-        if(match)
+        if (match)
         {
-            if((ipVersion == NetworkInterface::IPv4_OR_IPv6) ||
-               (ipVersion == NetworkInterface::IPv4_ONLY && !iface.supportsIPv6() && iface.supportsIPv4()) ||
-               (ipVersion == NetworkInterface::IPv6_ONLY && !iface.supportsIPv4() && iface.supportsIPv6()))
+            if ((ipVersion == NetworkInterface::IPv4_OR_IPv6) ||
+                (ipVersion == NetworkInterface::IPv4_ONLY && !iface.supportsIPv6() && iface.supportsIPv4()) ||
+                (ipVersion == NetworkInterface::IPv6_ONLY && !iface.supportsIPv4() && iface.supportsIPv6()))
             {
                 results.push_back(iface);
             }
@@ -322,7 +325,6 @@ Poco::Net::IPAddress NetworkUtils::getPublicIPAddress(const std::string& url)
         return Poco::Net::IPAddress();
     }
 }
-
 
 
 } } // namespace ofx::Net

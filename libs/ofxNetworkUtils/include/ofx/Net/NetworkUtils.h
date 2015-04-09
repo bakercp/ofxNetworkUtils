@@ -112,7 +112,7 @@ public:
     ///        wildard (0.0.0.0) IP address will be returned.
     static Poco::Net::IPAddress getPublicIPAddress(const std::string& url = DEFAULT_PUBLIC_IP_QUERY_URL);
 
-    ///< \brief The default URL to determine the machine's public IP.
+    /// \brief The default URL to determine the machine's public IP.
     static const std::string DEFAULT_PUBLIC_IP_QUERY_URL;
 
 };
