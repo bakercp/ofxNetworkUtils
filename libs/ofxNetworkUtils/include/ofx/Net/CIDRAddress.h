@@ -31,6 +31,7 @@ extern "C" {
 }
 
 
+#include <vector>
 #include "Poco/Net/IPAddress.h"
 
 
