@@ -96,6 +96,7 @@ CIDRAddress::CIDRAddress(const Poco::Net::IPAddress& addr)
 CIDRAddress& CIDRAddress::operator = (const CIDRAddress& addr)
 {
     _cidr = cidr_dup(addr._cidr);
+    return *this;
 }
 
 
