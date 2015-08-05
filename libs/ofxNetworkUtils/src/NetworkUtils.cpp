@@ -84,7 +84,7 @@ std::string NetworkUtils::getNodeName()
 }
 
 
-std::string getMacAddress()
+std::string NetworkUtils::getMacAddress()
 {
     std::string nodeId = "UNKNOWN";
     
