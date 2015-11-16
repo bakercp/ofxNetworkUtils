@@ -28,11 +28,11 @@
 
 void ofApp::setup()
 {
-    thisHost = ofx::NetworkUtils::getThisHost();
-    nodeName = ofx::NetworkUtils::getNodeName();
-    publicIp = ofx::NetworkUtils::getPublicIPAddress();
+    thisHost = ofx::Net::NetworkUtils::getThisHost();
+    nodeName = ofx::Net::NetworkUtils::getNodeName();
+    publicIp = ofx::Net::NetworkUtils::getPublicIPAddress();
 
-    siteLocalInterfaces = ofx::NetworkUtils::listNetworkInterfaces(ofx::NetworkUtils::SITE_LOCAL);
+    siteLocalInterfaces = ofx::Net::NetworkUtils::listNetworkInterfaces(ofx::Net::NetworkUtils::SITE_LOCAL);
 }
 
 
@@ -51,9 +51,9 @@ void ofApp::draw()
 
     ofDrawBitmapString(ss.str(), x, y += 36);
 
-    Poco::Net::NetworkInterface::NetworkInterfaceList::iterator iter = siteLocalInterfaces.begin();
+    auto iter = siteLocalInterfaces.begin();
 
-    while(iter != siteLocalInterfaces.end())
+    while (iter != siteLocalInterfaces.end())
     {
         ss.str(""); // clear our stringstream
 
