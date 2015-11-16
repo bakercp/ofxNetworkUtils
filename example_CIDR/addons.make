@@ -1,3 +1,1 @@
 ofxNetworkUtils
-ofxUI
-addons
