@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Copyright (c) 2013 Christopher Baker <http://christopherbaker.net>
+// Copyright (c) 2013-2015 Christopher Baker <http://christopherbaker.net>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,19 +27,9 @@
 
 
 #include <string>
-#include "Poco/Environment.h"
-#include "Poco/Exception.h"
-#include "Poco/StreamCopier.h"
-#include "Poco/Net/DNS.h"
 #include "Poco/Net/HostEntry.h"
-#include "Poco/Net/NetException.h"
 #include "Poco/Net/IPAddress.h"
 #include "Poco/Net/NetworkInterface.h"
-#include "Poco/Net/HTTPClientSession.h"
-#include "Poco/Net/HTTPRequest.h"
-#include "Poco/Net/HTTPResponse.h"
-#include "ofLog.h"
-#include "ofURLFileLoader.h"
 
 
 namespace ofx {
@@ -88,7 +78,7 @@ public:
 
     /// \brief Query the system's MAC address
     /// \returns the MAC address of the first Ethernet adapter found on the
-    ///         system with the format (format "xx:xx:xx:xx:xx:xx").
+    ///          system with the format (format "xx:xx:xx:xx:xx:xx").
     static std::string getMacAddress();
 
     /// \param hostname The hostname to query for host information.
@@ -106,8 +96,8 @@ public:
     /// \returns a HostEntry about this system.
     static HostEntry getThisHost();
 
-    /// \brief List all network interfaces of a given address type.
-    /// \param addressType The address type to search for.
+    /// \brief List all network interfaces of a given AddressType.
+    /// \param addressType The AddressType to search for.
     /// \param ipVersion The IPVersion to search for.
     /// \returns a list of network interfaces.
     static NetworkInterfaceList listNetworkInterfaces(AddressType addressType,
@@ -122,13 +112,8 @@ public:
     ///        wildard (0.0.0.0) IP address will be returned.
     static Poco::Net::IPAddress getPublicIPAddress(const std::string& url = DEFAULT_PUBLIC_IP_QUERY_URL);
 
-    ///< \brief The default URL to determine the machine's public IP.
+    /// \brief The default URL to determine the machine's public IP.
     static const std::string DEFAULT_PUBLIC_IP_QUERY_URL;
-
-    // TODO: NetworkInterfaceList code has been updated in newer versions of
-    // POCO.  For network interface information, call POCO directly.
-
-// static bool isInRange(const std::string cidr)
 
 };
 

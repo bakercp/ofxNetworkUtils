@@ -1,6 +1,6 @@
 // =============================================================================
 //
-// Copyright (c) 2013 Christopher Baker <http://christopherbaker.net>
+// Copyright (c) 2014-2015 Christopher Baker <http://christopherbaker.net>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,13 +36,11 @@ public:
     void setup();
     void draw();
 
-    Poco::Net::HostEntry thisHost;
-    std::string nodeName;
+    static std::string toString(const ofx::Net::IPAddressRange& range);
 
-    Poco::Net::IPAddress publicIp;
+    static std::string toString(const ofx::Net::IPAddressRange& range,
+                                const Poco::Net::IPAddress& address);
 
-    Poco::Net::NetworkInterface::NetworkInterfaceList siteLocalInterfaces;
-
-    ofx::Net::CIDRAddress cidr;
-
+    static std::string toString(const ofx::Net::IPAddressRange& range0,
+                                const ofx::Net::IPAddressRange& range1);
 };
