@@ -23,6 +23,9 @@
 // =============================================================================
 
 
+#pragma once
+
+
 #include "Poco/Net/HostEntry.h"
 #include "Poco/Net/IPAddress.h"
 #include "Poco/Net/NetworkInterface.h"
