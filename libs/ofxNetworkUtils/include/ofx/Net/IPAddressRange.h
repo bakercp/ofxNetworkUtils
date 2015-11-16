@@ -140,9 +140,14 @@ private:
     /// \returns the maximum prefix IPAddress for the given family.
     static const Poco::Net::IPAddress& maximumPrefixIPAddress(Poco::Net::IPAddress::Family family);
 
-    Poco::Net::IPAddress _address; ///< The IP address.
-    Poco::Net::IPAddress _mask;    ///< The IP address mask.
-    Poco::Net::IPAddress _subnet;  ///< The IP address subnet.
+    /// \brief The IP address.
+    Poco::Net::IPAddress _address;
+
+    /// \brief The IP address mask.
+    Poco::Net::IPAddress _mask;
+
+    /// \brief The IP address subnet.
+    Poco::Net::IPAddress _subnet;
 
     /// \brief Output the IPAddressRange in CIDR notation.
     /// \param os The output stream.
