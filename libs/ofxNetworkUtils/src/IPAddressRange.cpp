@@ -73,7 +73,14 @@ IPAddressRange::IPAddressRange(const std::string& CIDR)
 
     _mask = Poco::Net::IPAddress(prefix, _address.family());
 
-    _subnet = _address & _mask;
+    try
+    {
+        _subnet = _address & _mask;
+    }
+    catch (const Poco::InvalidArgumentException& exc)
+    {
+        ofLogError("IPAddressRange::IPAddressRange") << exc.displayText();
+    }
 }
 
 
@@ -125,7 +132,15 @@ unsigned IPAddressRange::getMaskPrefixLength() const
 
 Poco::Net::IPAddress IPAddressRange::getWildcardMask() const
 {
-    return maximumPrefixIPAddress(_subnet.family()) ^ _mask;
+    try
+    {
+        return maximumPrefixIPAddress(_subnet.family()) ^ _mask;
+    }
+    catch (const Poco::InvalidArgumentException& exc)
+    {
+        ofLogError("IPAddressRange::IPAddressRange") << exc.displayText();
+        return Poco::Net::IPAddress();
+    }
 }
 
 
@@ -154,7 +169,15 @@ bool IPAddressRange::contains(const Poco::Net::IPAddress& address) const
 
 Poco::Net::IPAddress IPAddressRange::getHostMax() const
 {
-    return _address | (maximumPrefixIPAddress(_subnet.family()) ^ _mask);
+    try
+    {
+        return _address | (maximumPrefixIPAddress(_subnet.family()) ^ _mask);
+    }
+    catch (const Poco::InvalidArgumentException& exc)
+    {
+        ofLogError("IPAddressRange::IPAddressRange") << exc.displayText();
+        return Poco::Net::IPAddress();
+    }
 }
 
 
