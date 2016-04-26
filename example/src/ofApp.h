@@ -41,6 +41,6 @@ public:
 
     Poco::Net::IPAddress publicIp;
 
-    Poco::Net::NetworkInterface::NetworkInterfaceList siteLocalInterfaces;
+    Poco::Net::NetworkInterface::List siteLocalInterfaces;
 
 };

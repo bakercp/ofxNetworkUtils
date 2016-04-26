@@ -28,13 +28,13 @@
 
 void ofApp::setup()
 {
-    ofx::Net::IPAddressRange range0;
-    ofx::Net::IPAddressRange range1(Poco::Net::IPAddress("192.168.0.1"));
-    ofx::Net::IPAddressRange range2(Poco::Net::IPAddress("192.168.0.33"), 23);
-    ofx::Net::IPAddressRange range3("2001:0db8:85a3::8a2e:0370:7334/64");
-    ofx::Net::IPAddressRange range4("192.168.5.219/28");
-    ofx::Net::IPAddressRange range5("2001:0db8:85a3::8a2e:0370:7334");
-    ofx::Net::IPAddressRange range6("0.0.0.0/31");
+    ofxNet::IPAddressRange range0;
+    ofxNet::IPAddressRange range1(Poco::Net::IPAddress("192.168.0.1"));
+    ofxNet::IPAddressRange range2(Poco::Net::IPAddress("192.168.0.33"), 23);
+    ofxNet::IPAddressRange range3("2001:0db8:85a3::8a2e:0370:7334/64");
+    ofxNet::IPAddressRange range4("192.168.5.219/28");
+    ofxNet::IPAddressRange range5("2001:0db8:85a3::8a2e:0370:7334");
+    ofxNet::IPAddressRange range6("0.0.0.0/31");
 
     std::cout << toString(range0);
     std::cout << "-----" << std::endl;
@@ -66,8 +66,8 @@ void ofApp::setup()
     std::cout << toString(range0, test5) << std::endl;
     std::cout << toString(range6, test5) << std::endl;
 
-    ofx::Net::IPAddressRange a("192.168.5.219/28");
-    ofx::Net::IPAddressRange b("192.168.5.219/27");
+    ofxNet::IPAddressRange a("192.168.5.219/28");
+    ofxNet::IPAddressRange b("192.168.5.219/27");
 
     std::cout << toString(a, b) << std::endl;
     std::cout << toString(b, a) << std::endl;
@@ -80,7 +80,7 @@ void ofApp::draw()
     ofBackground(0);
 }
 
-std::string ofApp::toString(const ofx::Net::IPAddressRange& range)
+std::string ofApp::toString(const ofxNet::IPAddressRange& range)
 {
     int tab = 20;
     std::stringstream ss;
@@ -98,7 +98,7 @@ std::string ofApp::toString(const ofx::Net::IPAddressRange& range)
 }
 
 
-std::string ofApp::toString(const ofx::Net::IPAddressRange& range,
+std::string ofApp::toString(const ofxNet::IPAddressRange& range,
                             const Poco::Net::IPAddress& address)
 {
     std::stringstream ss;
@@ -114,8 +114,8 @@ std::string ofApp::toString(const ofx::Net::IPAddressRange& range,
 }
 
 
-std::string ofApp::toString(const ofx::Net::IPAddressRange& range0,
-                            const ofx::Net::IPAddressRange& range1)
+std::string ofApp::toString(const ofxNet::IPAddressRange& range0,
+                            const ofxNet::IPAddressRange& range1)
 {
     std::stringstream ss;
 

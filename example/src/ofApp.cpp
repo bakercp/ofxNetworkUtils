@@ -28,11 +28,11 @@
 
 void ofApp::setup()
 {
-    thisHost = ofx::Net::NetworkUtils::getThisHost();
-    nodeName = ofx::Net::NetworkUtils::getNodeName();
-    publicIp = ofx::Net::NetworkUtils::getPublicIPAddress();
+    thisHost = ofxNet::NetworkUtils::getThisHost();
+    nodeName = ofxNet::NetworkUtils::getNodeName();
+    publicIp = ofxNet::NetworkUtils::getPublicIPAddress();
 
-    siteLocalInterfaces = ofx::Net::NetworkUtils::listNetworkInterfaces(ofx::Net::NetworkUtils::SITE_LOCAL);
+    siteLocalInterfaces = ofxNet::NetworkUtils::listNetworkInterfaces(ofxNet::NetworkUtils::SITE_LOCAL);
 }
 
 

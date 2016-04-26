@@ -36,11 +36,11 @@ public:
     void setup();
     void draw();
 
-    static std::string toString(const ofx::Net::IPAddressRange& range);
+    static std::string toString(const ofxNet::IPAddressRange& range);
 
-    static std::string toString(const ofx::Net::IPAddressRange& range,
+    static std::string toString(const ofxNet::IPAddressRange& range,
                                 const Poco::Net::IPAddress& address);
 
-    static std::string toString(const ofx::Net::IPAddressRange& range0,
-                                const ofx::Net::IPAddressRange& range1);
+    static std::string toString(const ofxNet::IPAddressRange& range0,
+                                const ofxNet::IPAddressRange& range1);
 };
