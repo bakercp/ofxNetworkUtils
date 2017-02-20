@@ -25,7 +25,7 @@ const Poco::Net::IPAddress IPAddressRange::MAXIMUM_PREFIX_IPV6(128, Poco::Net::I
 IPAddressRange::IPAddressRange():
     _address(Poco::Net::IPAddress::IPv4),
     _mask(maximumPrefixIPAddress(Poco::Net::IPAddress::IPv4)),
-    _subnet(_address & _mask)
+    _subnet(bitwiseOp(_address, _mask, BitwiseOp::AND))
 {
 }
 
@@ -46,30 +46,24 @@ IPAddressRange::IPAddressRange(const std::string& CIDR)
     {
         std::string prefixString = CIDR.substr(position + 1);
 
-        if (!Poco::NumberParser::tryParseUnsigned(prefixString, prefix) || prefix > maximumPrefix(_address.family()))
+        if (!Poco::NumberParser::tryParseUnsigned(prefixString,
+                                                  prefix) || prefix > maximumPrefix(_address.family()))
         {
-            ofLogError("IPAddressRange::IPAddressRange") << "Invalid prefix CIDR prefix: " << prefixString;
             prefix = maximumPrefix(_address.family());
+            ofLogError("IPAddressRange::IPAddressRange") << "Invalid prefix CIDR prefix: " << prefixString << ", using " << prefix;
         }
     }
 
     _mask = Poco::Net::IPAddress(prefix, _address.family());
+    _subnet = bitwiseOp(_address, _mask, BitwiseOp::AND);
 
-    try
-    {
-        _subnet = _address & _mask;
-    }
-    catch (const Poco::InvalidArgumentException& exc)
-    {
-        ofLogError("IPAddressRange::IPAddressRange") << exc.displayText();
-    }
 }
 
 
 IPAddressRange::IPAddressRange(const Poco::Net::IPAddress& address):
     _address(address),
     _mask(maximumPrefixIPAddress(_address.family())),
-    _subnet(_address & _mask)
+    _subnet(bitwiseOp(_address, _mask, BitwiseOp::AND))
 {
 }
 
@@ -78,7 +72,7 @@ IPAddressRange::IPAddressRange(const Poco::Net::IPAddress& address,
                                unsigned prefix):
     _address(address),
     _mask(prefix, _address.family()),
-    _subnet(_address & _mask)
+    _subnet(bitwiseOp(_address, _mask, BitwiseOp::AND))
 {
 }
 
@@ -106,33 +100,30 @@ Poco::Net::IPAddress IPAddressRange::getMask() const
 }
 
 
-unsigned IPAddressRange::getMaskPrefixLength() const
+Poco::Net::IPAddress IPAddressRange::address() const
 {
-    return _mask.prefixLength();
+    return _address;
 }
 
 
-Poco::Net::IPAddress IPAddressRange::getWildcardMask() const
+Poco::Net::IPAddress IPAddressRange::subnet() const
 {
-    try
-    {
-        return maximumPrefixIPAddress(_subnet.family()) ^ _mask;
-    }
-    catch (const Poco::InvalidArgumentException& exc)
-    {
-        ofLogError("IPAddressRange::IPAddressRange") << exc.displayText();
-        return Poco::Net::IPAddress();
-    }
+    return _subnet;
 }
 
+
+Poco::Net::IPAddress IPAddressRange::mask() const
+{
+    return _mask;
+}
 
 
 bool IPAddressRange::contains(const IPAddressRange& range) const
 {
     // TODO: this could be more efficient.
-    return getMaskPrefixLength() <= range.getMaskPrefixLength()
-        && contains(range.getHostMin())
-        && contains(range.getHostMax());
+    return maskPrefixLength() <= range.maskPrefixLength()
+        && contains(range.hostMin())
+        && contains(range.hostMax());
 }
 
 
@@ -144,26 +135,54 @@ bool IPAddressRange::contains(const Poco::Net::IPAddress& address) const
     }
     else
     {
-        return _subnet == (address & _mask);
+        return _subnet == bitwiseOp(address, _mask, BitwiseOp::AND);
     }
+}
+
+
+unsigned IPAddressRange::getMaskPrefixLength() const
+{
+    return maskPrefixLength();
+}
+
+
+Poco::Net::IPAddress IPAddressRange::getWildcardMask() const
+{
+    return wildcardMask();
 }
 
 
 Poco::Net::IPAddress IPAddressRange::getHostMax() const
 {
-    try
-    {
-        return _address | (maximumPrefixIPAddress(_subnet.family()) ^ _mask);
-    }
-    catch (const Poco::InvalidArgumentException& exc)
-    {
-        ofLogError("IPAddressRange::IPAddressRange") << exc.displayText();
-        return Poco::Net::IPAddress();
-    }
+    return hostMax();
 }
 
 
 Poco::Net::IPAddress IPAddressRange::getHostMin() const
+{
+    return hostMin();
+}
+
+
+unsigned IPAddressRange::maskPrefixLength() const
+{
+    return _mask.prefixLength();
+}
+
+
+Poco::Net::IPAddress IPAddressRange::wildcardMask() const
+{
+    return bitwiseOp(maximumPrefixIPAddress(_subnet.family()), _mask, BitwiseOp::XOR);
+}
+
+
+Poco::Net::IPAddress IPAddressRange::hostMax() const
+{
+    return bitwiseOp(_address, wildcardMask(), BitwiseOp::OR);
+}
+
+
+Poco::Net::IPAddress IPAddressRange::hostMin() const
 {
     return _subnet;
 }
@@ -192,6 +211,38 @@ bool IPAddressRange::operator == (const IPAddressRange& range) const
     return _address == range._address &&
            _subnet == range._subnet &&
            _mask == range._mask;
+}
+
+
+bool IPAddressRange::operator != (const IPAddressRange& range) const
+{
+    return !(*this == range);
+}
+
+
+bool IPAddressRange::operator < (const IPAddressRange& range) const
+{
+    return _address < range._address &&
+           _subnet < range._subnet &&
+           _mask < range._mask;
+}
+
+
+bool IPAddressRange::operator <= (const IPAddressRange& range) const
+{
+    return !(range < *this);
+}
+
+
+bool IPAddressRange::operator > (const IPAddressRange& range) const
+{
+    return range < *this;
+}
+
+
+bool IPAddressRange::operator >= (const IPAddressRange& range) const
+{
+    return !(*this < range);
 }
 
 
@@ -226,6 +277,60 @@ const Poco::Net::IPAddress& IPAddressRange::maximumPrefixIPAddress(Poco::Net::IP
     }
 }
 
+
+
+Poco::Net::IPAddress IPAddressRange::bitwiseOp(const Poco::Net::IPAddress& address,
+                                               const Poco::Net::IPAddress& mask,
+                                               BitwiseOp op)
+{
+    try
+    {
+        if (address.family() == Poco::Net::IPAddress::Family::IPv6 &&
+            mask.family() == Poco::Net::IPAddress::Family::IPv6)
+        {
+            if (address.scope() != mask.scope())
+                throw Poco::InvalidArgumentException("Scope ID of passed IPv6 address does not match with the source one.");
+
+            const Poco::Net::Impl::IPv6AddressImpl t(address.addr(), address.scope());
+            const Poco::Net::Impl::IPv6AddressImpl o(mask.addr(), mask.scope());
+            Poco::Net::Impl::IPv6AddressImpl result;
+
+            switch (op)
+            {
+                case BitwiseOp::AND:
+                    result = t & o;
+                    break;
+                case BitwiseOp::OR:
+                    result = t | o;
+                    break;
+                case BitwiseOp::XOR:
+                    result = t ^ o;
+                    break;
+            }
+
+            return Poco::Net::IPAddress(result.addr(), result.length(), result.scope());
+
+        }
+        else
+        {
+            // This will throw an exception if in compatible mask / address.
+            switch (op)
+            {
+                case BitwiseOp::AND:
+                    return address & mask;
+                case BitwiseOp::OR:
+                    return address | mask;
+                case BitwiseOp::XOR:
+                    return address ^ mask;
+            }
+        }
+    }
+    catch (const Poco::InvalidArgumentException& exc)
+    {
+        ofLogError("IPAddressRange::makeSubnet") << exc.displayText();
+        return Poco::Net::IPAddress();
+    }
+}
 
 
 } } // namespace ofx::Net
