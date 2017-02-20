@@ -225,11 +225,11 @@ NetworkUtils::HostEntry NetworkUtils::getThisHost()
 }
 
 NetworkUtils::NetworkInterfaceList NetworkUtils::listNetworkInterfaces(AddressType addressType,
-                                                             NetworkInterface::IPVersion ipVersion)
+                                                                       NetworkInterface::IPVersion ipVersion)
 {
-    NetworkInterfaceList all = Poco::Net::NetworkInterface::list();
-    NetworkInterfaceList results;  // empty to start
-    NetworkInterfaceList::iterator iter = all.begin();
+    NetworkInterfaceList results;
+    auto all = Poco::Net::NetworkInterface::list();
+    auto iter = all.begin();
 
     while (iter != all.end())
     {
@@ -240,6 +240,9 @@ NetworkUtils::NetworkInterfaceList NetworkUtils::listNetworkInterfaces(AddressTy
 
         switch (addressType)
         {
+            case ANY:
+                match = true;
+                break;
             case WILDCARD:
                 match = address.isWildcard();
                 break;
