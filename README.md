@@ -5,7 +5,10 @@ A collection of network utilities.
 
 ## Features
 
-- Test IPs ranges, create white lists, black lists. etc.
+- Test IP ranges, create white lists, black lists. etc.
+- IP Address Range support, including CIDR notation for IPv4 / IPv6.
+- Listen for network interface connections, disconnections.
+- Get public IP address, hostname, etc.
 
 ## Getting Started
 
