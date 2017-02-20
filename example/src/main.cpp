@@ -10,6 +10,6 @@
 
 int main()
 {
-    ofSetupOpenGL(400, 400, OF_WINDOW);
+    ofSetupOpenGL(400, 200, OF_WINDOW);
     return ofRunApp(std::make_shared<ofApp>());
 }

@@ -10,11 +10,12 @@
 
 void ofApp::setup()
 {
+    ofSetFrameRate(1);
+
     thisHost = ofxNet::NetworkUtils::getThisHost();
     nodeName = ofxNet::NetworkUtils::getNodeName();
     publicIp = ofxNet::NetworkUtils::getPublicIPAddress();
 
-    siteLocalInterfaces = ofxNet::NetworkUtils::listNetworkInterfaces(ofxNet::NetworkUtils::SITE_LOCAL);
 }
 
 
@@ -22,31 +23,22 @@ void ofApp::draw()
 {
     ofBackground(0);
 
-    int x = 12;
-    int y = 12;
+    int x = 14;
+    int y = 14;
 
     std::stringstream ss;
 
-    ss << std::setw(10) << "Hostname: " << nodeName << std::endl;
-    ss << std::setw(10) << "Public IP: " << publicIp.toString() << std::endl;
-    ss << "------------------------------" << endl;
+    ss << "Host Name: " << thisHost.name() << std::endl;
+    ss << "Node Name: " << nodeName << std::endl;
+    ss << "Public IP: " << publicIp.toString() << std::endl;
+    ss << "--------------------------------" << std::endl;
 
-    ofDrawBitmapString(ss.str(), x, y += 36);
+    siteLocalInterfaces = ofxNet::NetworkUtils::listNetworkInterfaces(ofxNet::NetworkUtils::SITE_LOCAL);
 
-    auto iter = siteLocalInterfaces.begin();
-
-    while (iter != siteLocalInterfaces.end())
+    for (const auto& interface: siteLocalInterfaces)
     {
-        ss.str(""); // clear our stringstream
-
-        Poco::Net::NetworkInterface iface = (*iter);
-
-        ss << std::endl << std::setw(18) << "IFace Name: " << iface.name();
-        ss << std::endl << std::setw(18) << "Local IP: " << iface.address().toString();
-
-        ofDrawBitmapString(ss.str(), x + 5, y += 24);
-
-        ++iter;
+        ss << "Interface: [" << interface.name() << "] (" << interface.address().toString() << ")" << std::endl;
     }
-}
 
+    ofDrawBitmapString(ss.str(), x, y);
+}
