@@ -333,9 +333,12 @@ Poco::Net::IPAddress IPAddressRange::bitwiseOp(const Poco::Net::IPAddress& addre
     }
     catch (const Poco::InvalidArgumentException& exc)
     {
-        ofLogError("IPAddressRange::makeSubnet") << exc.displayText();
+        ofLogError("IPAddressRange::bitwiseOp") << exc.displayText();
         return Poco::Net::IPAddress();
     }
+
+    ofLogError("IPAddressRange::bitwiseOp") << "At end of function, this should not happen.";
+    return Poco::Net::IPAddress();
 }
 
 
