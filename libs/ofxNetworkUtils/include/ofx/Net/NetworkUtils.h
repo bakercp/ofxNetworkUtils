@@ -34,6 +34,8 @@ public:
     /// \brief An enumeration of address types.
     enum AddressType
     {
+        /// \brief Any address type.
+        ANY,
         /// \brief Wildcard address (e.g. all zeros)
         WILDCARD,
         /// \brief Broadcast address (e.g. all bits are 1)
@@ -87,7 +89,7 @@ public:
 
     /// \brief Get a public IP address for the default interface.
     /// \param url The public IP address discovery endpoint.
-    ///        Users may choose to use their own endpoint.  The
+    ///        Users may choose to use their own endpoint. The
     ///        endpoint must return a single plain text IPv4 or IPv6
     ///        IP address.
     /// \returns An IP address if successful.  If unsuccessful, a default

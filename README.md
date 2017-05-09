@@ -5,7 +5,10 @@ A collection of network utilities.
 
 ## Features
 
-- Test IPs ranges, create white lists, black lists. etc.
+- Test IP ranges, create white lists, black lists. etc.
+- IP Address Range support, including CIDR notation for IPv4 / IPv6.
+- Listen for network interface connections, disconnections.
+- Get public IP address, hostname, etc.
 
 ## Getting Started
 
@@ -17,7 +20,7 @@ API documentation can be found here.
 
 ## Build Status
 
-Linux, macOS [![Build Status](https://travis-ci.org/bakercp/ofxNetworkUtils.svg?branch=stable)](https://travis-ci.org/bakercp/ofxNetworkUtils)
+Linux, macOS [![Build Status](https://travis-ci.org/bakercp/ofxNetworkUtils.svg?branch=master)](https://travis-ci.org/bakercp/ofxNetworkUtils)
 
 Visual Studio, MSYS [![Build status](https://ci.appveyor.com/api/projects/status/6fj1rim0kyhhkvn4/branch/master?svg=true)](https://ci.appveyor.com/project/bakercp/ofxnetworkutils/branch/master)
 

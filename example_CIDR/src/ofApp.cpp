@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2014 Christopher Baker <http://christopherbaker.net>
+// Copyright (c) 2014 Christopher Baker <https://christopherbaker.net>
 //
 // SPDX-License-Identifier:	MIT
 //
@@ -62,19 +62,29 @@ void ofApp::draw()
     ofBackground(0);
 }
 
+
 std::string ofApp::toString(const ofxNet::IPAddressRange& range)
 {
     int tab = 20;
     std::stringstream ss;
     ss << std::setw(tab) << "Range: " << range.toString() << std::endl;
-    ss << std::setw(tab) << "Subnet: " << range.getSubnet().toString() << std::endl;
-    ss << std::setw(tab) << "Mask: " << range.getMask().toString() << std::endl;
-
-    ss << std::setw(tab) << "Prefix Mask: " << range.getMaskPrefixLength() << std::endl;
-    ss << std::setw(tab) << "Wildcard Mask: " << range.getWildcardMask().toString() << std::endl;
-
-    ss << std::setw(tab) << "Host Min: " << range.getHostMin().toString() << std::endl;
-    ss << std::setw(tab) << "Host Max: " << range.getHostMax().toString() << std::endl;
+    ss << std::setw(tab) << "Subnet: " << range.subnet().toString() << std::endl;
+    ss << std::setw(tab) << "Mask: " << range.mask().toString() << std::endl;
+    if (range.family() == Poco::Net::IPAddress::IPv4)
+    {
+        const uint8_t* bytes = reinterpret_cast<const uint8_t*>(range.mask().addr());
+        ss << std::setw(tab) << "Binary Mask: ";
+        ss << ofToBinary(bytes[0]) << ".";
+        ss << ofToBinary(bytes[1]) << ".";
+        ss << ofToBinary(bytes[2]) << ".";
+        ss << ofToBinary(bytes[3]);
+        ss << std::endl;
+    }
+    ss << std::setw(tab) << "Prefix Mask: " << range.maskPrefixLength() << std::endl;
+    ss << std::setw(tab) << "Wildcard Mask: " << range.wildcardMask().toString() << std::endl;
+    ss << std::setw(tab) << "Host Min: " << range.hostMin().toString() << std::endl;
+    ss << std::setw(tab) << "Host Max: " << range.hostMax().toString() << std::endl;
+    ss << "--------------------------------------------------------------------------------";
 
     return ss.str();
 }
@@ -88,8 +98,8 @@ std::string ofApp::toString(const ofxNet::IPAddressRange& range,
     ss << address.toString();
     ss << (range.contains(address) ? " is in " : " is NOT in ");
     ss << range.toString();
-    ss << " (" << range.getHostMin().toString();
-    ss << " - " << range.getHostMax().toString();
+    ss << " (" << range.hostMin().toString();
+    ss << " - " << range.hostMax().toString();
     ss << ")" << std::endl;
 
     return ss.str();
@@ -103,16 +113,16 @@ std::string ofApp::toString(const ofxNet::IPAddressRange& range0,
 
     ss << "The range: ";
     ss << range0.toString();
-    ss << " (" << range0.getHostMin().toString();
-    ss << " - " << range0.getHostMax().toString();
+    ss << " (" << range0.hostMin().toString();
+    ss << " - " << range0.hostMax().toString();
     ss << ") ";
 
     ss << (range1.contains(range0) ? " is contained in " : " is NOT contained in ");
 
     ss << "The range: ";
     ss << range1.toString();
-    ss << " (" << range1.getHostMin().toString();
-    ss << " - " << range1.getHostMax().toString();
+    ss << " (" << range1.hostMin().toString();
+    ss << " - " << range1.hostMax().toString();
     ss << ")" << std::endl;
 
     return ss.str();
