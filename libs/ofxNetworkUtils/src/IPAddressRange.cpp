@@ -208,6 +208,9 @@ unsigned IPAddressRange::maximumPrefix(Poco::Net::IPAddress::Family family)
         default:
             return 32;
     }
+    
+    ofLogWarning("IPAddressRange::maximumPrefix") << "Unknon IPAdress family.";
+    return 32;
 }
 
 
@@ -224,6 +227,9 @@ const Poco::Net::IPAddress& IPAddressRange::maximumPrefixIPAddress(Poco::Net::IP
         default:
             return MAXIMUM_PREFIX_IPV4;
     }
+
+    ofLogWarning("IPAddressRange::maximumPrefixIPAddress") << "Unknown IPAddress family.";
+    return MAXIMUM_PREFIX_IPV4;
 }
 
 
