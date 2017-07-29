@@ -8,6 +8,12 @@
 #pragma once
 
 
+#define OFX_NETWORKUTILS_VERSION_MAJOR 0
+#define OFX_NETWORKUTILS_VERSION_MINOR 10
+#define OFX_NETWORKUTILS_VERSION_PATCH 0
+#define OFX_NETWORKUTILS_VERSION_PRERELEASE "master"
+
+
 #include "Poco/Net/HostEntry.h"
 #include "Poco/Net/IPAddress.h"
 #include "Poco/Net/NetworkInterface.h"
