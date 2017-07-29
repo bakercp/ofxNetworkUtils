@@ -15,8 +15,8 @@
 class ofApp: public ofBaseApp
 {
 public:
-    void setup();
-    void draw();
+    void setup() override;
+    void draw() override;
 
     void onInterfaceUp(const Poco::Net::NetworkInterface& interface);
     void onInterfaceDown(const Poco::Net::NetworkInterface& interface);
