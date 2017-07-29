@@ -259,6 +259,9 @@ unsigned IPAddressRange::maximumPrefix(Poco::Net::IPAddress::Family family)
         default:
             return 32;
     }
+    
+    ofLogWarning("IPAddressRange::maximumPrefix") << "Unknon IPAdress family.";
+    return 32;
 }
 
 
@@ -275,6 +278,9 @@ const Poco::Net::IPAddress& IPAddressRange::maximumPrefixIPAddress(Poco::Net::IP
         default:
             return MAXIMUM_PREFIX_IPV4;
     }
+
+    ofLogWarning("IPAddressRange::maximumPrefixIPAddress") << "Unknown IPAddress family.";
+    return MAXIMUM_PREFIX_IPV4;
 }
 
 
@@ -327,9 +333,12 @@ Poco::Net::IPAddress IPAddressRange::bitwiseOp(const Poco::Net::IPAddress& addre
     }
     catch (const Poco::InvalidArgumentException& exc)
     {
-        ofLogError("IPAddressRange::makeSubnet") << exc.displayText();
+        ofLogError("IPAddressRange::bitwiseOp") << exc.displayText();
         return Poco::Net::IPAddress();
     }
+
+    ofLogError("IPAddressRange::bitwiseOp") << "At end of function, this should not happen.";
+    return Poco::Net::IPAddress();
 }
 
 
