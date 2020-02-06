@@ -19,7 +19,7 @@ namespace ofx {
 namespace Net {
 
 
-const std::string NetworkUtils::DEFAULT_PUBLIC_IP_QUERY_URL = "http://bot.whatismyipaddress.com";
+const std::string NetworkUtils::DEFAULT_PUBLIC_IP_QUERY_URL = "https://api.ipify.org";
 
 
 std::string NetworkUtils::getHostName()
