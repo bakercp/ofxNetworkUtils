@@ -15,7 +15,6 @@ void ofApp::setup()
     thisHost = ofxNet::NetworkUtils::getThisHost();
     nodeName = ofxNet::NetworkUtils::getNodeName();
     publicIp = ofxNet::NetworkUtils::getPublicIPAddress();
-
 }
 
 

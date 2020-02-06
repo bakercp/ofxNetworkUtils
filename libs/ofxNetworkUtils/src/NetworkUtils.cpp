@@ -220,7 +220,7 @@ NetworkUtils::HostEntry NetworkUtils::getThisHost()
         ofLogError("NetworkUtils::getThisHost") << "Unknown Exception.";
         return hostEntry;
     }
-    
+
     return hostEntry;
 }
 
